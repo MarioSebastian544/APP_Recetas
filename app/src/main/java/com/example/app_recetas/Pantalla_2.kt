@@ -14,15 +14,14 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun DetailScreen(
+    idReceta: Int,
     viewModel: RecipeViewModel
 ) {
-
-    val receta by viewModel.selectedRecipe.collectAsState()
+    val receta = viewModel.getRecipes().find { it.id == idReceta }
 
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
-
         Text(
             text = receta?.nombre ?: "Sin receta",
             style = MaterialTheme.typography.headlineMedium

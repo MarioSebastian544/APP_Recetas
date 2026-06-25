@@ -13,33 +13,24 @@ fun AppNavigation(
     viewModel: RecipeViewModel,
     modifier: Modifier = Modifier
 ) {
-
-    val navController =
-        rememberNavController()
+    val navController = rememberNavController()
 
     NavHost(
         navController = navController,
-        startDestination = "home"
+        startDestination = "principal",
+        modifier = modifier
     ) {
-
-        composable("home") {
-
-            Pantalla_principal(
-                navController,
-                viewModel
-            )
+        composable("principal") {
+            Pantalla_principal(navController = navController, viewModel = viewModel)
         }
 
-        composable(
-            route = "detail/{id}",
-            arguments = listOf(
-                navArgument("id") {
-                    type = NavType.IntType
-                }
-            )
-        ) {
 
-            DetailScreen(viewModel)
+        composable("detail/{id}") { backStackEntry ->
+
+            val id = backStackEntry.arguments?.getString("id")?.toIntOrNull() ?: 0
+
+
+            DetailScreen(idReceta = id, viewModel = viewModel)
         }
     }
 }
